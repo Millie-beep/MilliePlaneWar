@@ -1,0 +1,2 @@
+# This file ensures the public directory is tracked by Git even if it's empty.
+# You can place your player.png, enemy.png, and bgm.mp3 files here.

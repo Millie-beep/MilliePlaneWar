@@ -107,7 +107,7 @@ export default function App() {
       <audio 
         id="bg-music" 
         loop 
-        src="bgm.mp3" 
+        src={`${import.meta.env.BASE_URL}bgm.mp3`} 
       />
 
       {/* Notifications */}

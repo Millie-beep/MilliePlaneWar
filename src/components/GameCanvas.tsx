@@ -45,23 +45,22 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
 
   // Load images
   useEffect(() => {
+    const baseUrl = import.meta.env.BASE_URL;
     const pImg = new Image();
-    pImg.src = 'player.png'; // 去掉开头的 /
+    pImg.src = `${baseUrl}player.png`;
     pImg.onload = () => { 
       console.log('Player image loaded successfully');
       playerImageRef.current = pImg; 
       if (playerRef.current) playerRef.current.image = pImg;
     };
-    pImg.onerror = () => console.error('Failed to load player.png - check if it exists in public folder');
     
     const eImg = new Image();
-    eImg.src = 'enemy.png'; // 去掉开头的 /
+    eImg.src = `${baseUrl}enemy.png`;
     eImg.onload = () => { 
       console.log('Enemy image loaded successfully');
       enemyImageRef.current = eImg; 
       enemiesRef.current.forEach(e => e.image = eImg);
     };
-    eImg.onerror = () => console.error('Failed to load enemy.png - check if it exists in public folder');
   }, []);
 
   // Initialize stars and nebulae
