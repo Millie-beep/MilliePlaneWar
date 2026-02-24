@@ -41,12 +41,28 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           </div>
 
           <div className="flex flex-col items-end gap-3 pointer-events-auto">
-            <button 
-              onClick={() => setIsMusicEnabled(!isMusicEnabled)}
-              className="glass p-3 rounded-xl hover:bg-white/20 transition-colors text-white/70"
-            >
-              {isMusicEnabled ? <Music size={20} className="text-cyan-400" /> : <Music2 size={20} />}
-            </button>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => setGameState(GameState.PAUSED)}
+                className="glass p-3 rounded-xl hover:bg-white/20 transition-colors text-white/70"
+                title="暂停 (P)"
+              >
+                <Pause size={20} />
+              </button>
+              <button 
+                onClick={() => setGameState(GameState.START)}
+                className="glass p-3 rounded-xl hover:bg-rose-500/20 transition-colors text-rose-400"
+                title="退出"
+              >
+                <RotateCcw size={20} />
+              </button>
+              <button 
+                onClick={() => setIsMusicEnabled(!isMusicEnabled)}
+                className="glass p-3 rounded-xl hover:bg-white/20 transition-colors text-white/70"
+              >
+                {isMusicEnabled ? <Music size={20} className="text-cyan-400" /> : <Music2 size={20} />}
+              </button>
+            </div>
             <div className="glass p-4 rounded-2xl flex items-center gap-4">
               <div className="flex flex-col items-end">
                 <span className="text-[10px] text-white/50 uppercase font-bold">Level</span>
@@ -146,6 +162,43 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           </motion.div>
         )}
 
+        {gameState === GameState.WIN && (
+          <motion.div 
+            key="win"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="m-auto glass-dark p-12 rounded-[2.5rem] flex flex-col items-center text-center max-w-lg pointer-events-auto border-emerald-500/30"
+          >
+            <div className="w-20 h-20 bg-emerald-500/20 rounded-3xl flex items-center justify-center mb-6 neon-border text-emerald-400">
+              <Trophy size={40} />
+            </div>
+            <div className="text-emerald-500 mb-2 font-black text-sm uppercase tracking-[0.3em]">Mission Accomplished</div>
+            <h2 className="text-6xl font-black mb-8 tracking-tighter">星际主宰</h2>
+            
+            <p className="text-white/60 mb-8 leading-relaxed">
+              恭喜！你已成功击退所有敌军，成为了银河系的传奇先锋。
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 w-full mb-8">
+              <div className="glass p-6 rounded-2xl flex flex-col items-center">
+                <span className="text-[10px] text-white/40 uppercase font-bold mb-1">最终得分</span>
+                <span className="text-3xl font-black text-cyan-400">{stats.score}</span>
+              </div>
+              <div className="glass p-6 rounded-2xl flex flex-col items-center">
+                <span className="text-[10px] text-white/40 uppercase font-bold mb-1">击落总数</span>
+                <span className="text-3xl font-black text-emerald-400">{stats.enemiesKilled}</span>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setGameState(GameState.START)}
+              className="w-full py-5 bg-emerald-500 text-black font-black rounded-2xl flex items-center justify-center gap-3 hover:bg-emerald-400 transition-all hover:scale-105 active:scale-95"
+            >
+              <RotateCcw size={20} /> 返回主页
+            </button>
+          </motion.div>
+        )}
+
         {gameState === GameState.GAME_OVER && (
           <motion.div 
             key="gameover"
@@ -195,7 +248,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
       </AnimatePresence>
 
       {/* Sidebar (Desktop only) */}
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 w-64">
+      <div className="fixed right-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 w-64 pointer-events-auto">
         <div className="glass p-6 rounded-3xl">
           <h3 className="text-xs font-black uppercase tracking-widest text-white/40 mb-4 flex items-center gap-2">
             <Info size={14} /> 战术装备

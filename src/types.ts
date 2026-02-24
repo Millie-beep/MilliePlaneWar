@@ -2,7 +2,8 @@ export enum GameState {
   START,
   PLAYING,
   PAUSED,
-  GAME_OVER
+  GAME_OVER,
+  WIN
 }
 
 export enum EnemyType {

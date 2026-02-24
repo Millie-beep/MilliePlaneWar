@@ -46,22 +46,22 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
   // Load images
   useEffect(() => {
     const pImg = new Image();
-    pImg.src = '/player.png';
+    pImg.src = 'player.png'; // 去掉开头的 /
     pImg.onload = () => { 
       console.log('Player image loaded successfully');
       playerImageRef.current = pImg; 
       if (playerRef.current) playerRef.current.image = pImg;
     };
-    pImg.onerror = () => console.error('Failed to load /player.png - check if it exists in public folder');
+    pImg.onerror = () => console.error('Failed to load player.png - check if it exists in public folder');
     
     const eImg = new Image();
-    eImg.src = '/enemy.png';
+    eImg.src = 'enemy.png'; // 去掉开头的 /
     eImg.onload = () => { 
       console.log('Enemy image loaded successfully');
       enemyImageRef.current = eImg; 
       enemiesRef.current.forEach(e => e.image = eImg);
     };
-    eImg.onerror = () => console.error('Failed to load /enemy.png - check if it exists in public folder');
+    eImg.onerror = () => console.error('Failed to load enemy.png - check if it exists in public folder');
   }, []);
 
   // Initialize stars and nebulae
@@ -260,9 +260,16 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
               const newKills = prev.enemiesKilled + 1;
               const newScore = prev.score + enemy.scoreValue;
               
-              // Level up logic
-              if (newKills % 10 === 0) {
-                levelUpPendingRef.current = true;
+              // Level up logic based on score
+              const levelThresholds = [100, 300, 800, 1000, 5000];
+              const currentThreshold = levelThresholds[prev.level - 1];
+
+              if (newScore >= currentThreshold) {
+                if (prev.level === 5) {
+                  setGameState(GameState.WIN);
+                } else {
+                  levelUpPendingRef.current = true;
+                }
               }
 
               // Achievement logic

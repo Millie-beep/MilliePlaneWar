@@ -81,31 +81,33 @@ export default function App() {
   }, [gameState, stats.level, handleAchievement]);
 
   return (
-    <div className="w-screen h-screen bg-black text-white selection:bg-cyan-500/30">
-      <GameCanvas 
-        gameState={gameState} 
-        setGameState={setGameState}
-        stats={stats}
-        setStats={setStats}
-        onAchievement={handleAchievement}
-        onLevelUp={handleLevelUp}
-        onEscaped={handleEscaped}
-      />
-      
-      <UIOverlay 
-        gameState={gameState} 
-        setGameState={setGameState} 
-        stats={stats}
-        achievements={achievements}
-        isMusicEnabled={isMusicEnabled}
-        setIsMusicEnabled={setIsMusicEnabled}
-      />
+    <div className="w-screen h-screen bg-black text-white selection:bg-cyan-500/30 flex overflow-hidden">
+      <div className="flex-1 relative h-full xl:mr-72 transition-all duration-500">
+        <GameCanvas 
+          gameState={gameState} 
+          setGameState={setGameState}
+          stats={stats}
+          setStats={setStats}
+          onAchievement={handleAchievement}
+          onLevelUp={handleLevelUp}
+          onEscaped={handleEscaped}
+        />
+        
+        <UIOverlay 
+          gameState={gameState} 
+          setGameState={setGameState} 
+          stats={stats}
+          achievements={achievements}
+          isMusicEnabled={isMusicEnabled}
+          setIsMusicEnabled={setIsMusicEnabled}
+        />
+      </div>
 
       {/* Background Music */}
       <audio 
         id="bg-music" 
         loop 
-        src="/bgm.mp3" 
+        src="bgm.mp3" 
       />
 
       {/* Notifications */}
