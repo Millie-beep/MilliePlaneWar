@@ -105,7 +105,7 @@ export default function App() {
       <audio 
         id="bg-music" 
         loop 
-        src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a7348a.mp3" 
+        src="/bgm.mp3" 
       />
 
       {/* Notifications */}
